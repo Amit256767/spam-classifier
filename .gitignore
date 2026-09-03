@@ -1,0 +1,21 @@
+venv/
+# Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Node modules
+node_modules/
+client/node_modules/
+
+# Environment variables
+.env
+
+# Build folders
+dist/
+client/dist/
+
+# IDE settings
+.vscode/
