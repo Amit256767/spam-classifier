@@ -1,8 +1,7 @@
 import axios from 'axios';
-import cors from 'cors'
 
 const api = axios.create({
-    baseURL: "https://spam-classifier-tagz.onrender.com",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     headers:{
         "Content-Type": "application/json"
     }
