@@ -9,7 +9,7 @@ A full-stack machine-learning web app that classifies a message as **Spam** or *
 
 ## Screenshot
 
-![Spam Classifier dashboard](client/output/dashboard.png)
+![Spam Classifier dashboard](client/output/dashboard.webp)
 
 ## Features
 
