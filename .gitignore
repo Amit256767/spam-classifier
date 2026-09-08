@@ -19,3 +19,5 @@ client/dist/
 
 # IDE settings
 .vscode/
+# Local Netlify folder
+.netlify
