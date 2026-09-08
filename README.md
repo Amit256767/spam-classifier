@@ -1,102 +1,108 @@
-# 📩 Spam Classifier
+# Spam Classifier
 
-## 📌 Project Details
+A full-stack machine-learning web app that classifies a message as **Spam** or **Ham (trusted)**. Enter a message in the React interface and receive a prediction from the FastAPI model-serving API.
 
-Spam Classifier is a Machine Learning powered web application designed to identify whether a message is **Spam** or **Trusted (Ham)** in real time. The project helps users quickly verify suspicious text messages, promotional content, or scam-like messages through an easy-to-use interface.
+## Live application
 
-This project combines **Frontend Development, Backend API Development, and Machine Learning** into one complete production style application.
+- Frontend: [spam-classifier-amit.netlify.app](https://spam-classifier-amit.netlify.app)
+- Backend API: [spam-classifier-tagz.onrender.com](https://spam-classifier-tagz.onrender.com)
 
-#### Project Link: [View Project](https://spamzero.netlify.app/)
+## Screenshot
 
----
-## 📸 Screenshot
-![Dashboard](client/output/dashboard.png)
+![Spam Classifier dashboard](client/output/dashboard.png)
 
----
+## Features
 
-## 🎯 Objective
+- Classifies submitted messages as spam or ham
+- Responsive React user interface
+- FastAPI prediction endpoint
+- Scikit-learn model with TF-IDF text vectorization
+- Netlify deployment with an `/api/*` proxy to the backend
 
-The main goal of this project is to build a smart system that can automatically detect spam messages and improve digital communication safety.
+## Tech stack
 
----
+| Area | Technology |
+| --- | --- |
+| Frontend | React, Vite, Tailwind CSS, Axios |
+| Backend | Python, FastAPI, Uvicorn |
+| Machine learning | Scikit-learn, Joblib, NLP |
+| Hosting | Netlify (frontend), Render (API) |
 
-## 🚀 Core Features
+## How it works
 
-- Real-time message prediction
-- Spam / Trusted classification
-- Fast response using API integration
-- Clean responsive user interface
-- ML model integration with backend
-- Easy deployment architecture
+1. A user enters a message in the web app.
+2. The frontend posts it to `POST /predict`.
+3. The API cleans the text, applies the saved TF-IDF vectorizer, and runs the trained classifier.
+4. The UI displays the resulting `spam` or `ham` prediction.
 
----
+## Run locally
 
-## 🛠️ Technologies Used
+### Requirements
 
-### Frontend
-- React.js
-- Tailwind CSS
-- Axios
-- Vite
+- Python 3.10 or newer
+- Node.js 20 or newer
 
-### Backend
-- FastAPI
-- Python
-- Uvicorn
+### 1. Start the backend
 
-### Machine Learning
-- Scikit-learn
-- Joblib
-- Natural Language Processing (NLP)
+```bash
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8765
+```
 
----
+The API will be available at `http://127.0.0.1:8765`. Verify it at `GET /predict`.
 
-## 🧠 Working Process
+### 2. Start the frontend
 
-1. User enters a text message.
-2. Frontend sends message to backend API.
-3. Backend cleans the text.
-4. Pre-trained ML model analyzes message patterns.
-5. Prediction returned:
+```bash
+npm --prefix client install
+Copy-Item client/.env.example client/.env
+npm --prefix client run dev
+```
 
-- `spam` → Risky / Promotional / Fraud Message  
-- `ham` → Trusted / Normal Message
+Open the URL printed by Vite (normally `http://localhost:5173`). The local environment file points the frontend to `http://127.0.0.1:8765`.
 
-6. Result displayed instantly to user.
+## API
 
----
+### `POST /predict`
 
-## 💡 Real World Use Cases
+Request body:
 
-- Detect suspicious SMS messages
-- Filter scam offers
-- Check promotional spam content
-- Learn ML deployment workflow
-- Demonstrate AI-powered web apps
+```json
+{
+  "message": "Congratulations! You have won a free prize."
+}
+```
 
----
+Response:
 
-## 🌍 Deployment
+```json
+{
+  "input": "Congratulations! You have won a free prize.",
+  "clean_text": "congratulations you have won a free prize",
+  "prediction": "spam"
+}
+```
 
-- Frontend hosted online
-- Backend API deployed separately
-- Connected through REST API architecture
+## Deployment
 
----
+Netlify builds the client with `npm --prefix client run build` and publishes `client/dist`. The [`netlify.toml`](netlify.toml) configuration redirects `/api/*` requests to the Render API.
 
-## 📈 Skills Demonstrated
+For a production frontend build locally:
 
-- React Development
-- Tailwind UI Design
-- API Integration
-- Python Backend Development
-- FastAPI
-- Machine Learning Deployment
-- Full Stack Project Structuring
+```bash
+npm --prefix client run build
+```
 
----
+## Project structure
 
-## 👨‍💻 Developed By
-
-**Deepak N**  
-B.Tech IT Student | Full Stack Developer | ML Builder
+```text
+.
+├── client/             # React + Vite frontend
+├── dataset/            # Training data
+├── models/             # Saved classifier and TF-IDF vectorizer
+├── main.py             # FastAPI application
+├── requirements.txt    # Python dependencies
+└── netlify.toml        # Netlify build and API proxy configuration
+```
